@@ -44,7 +44,7 @@
 		if( request.getParameter("prevPage") != null) 
 			response.sendRedirect(request.getParameter("prevPage"));
 		else
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("../index.jsp");
 	}// End UpdatePage
 	else {
 		// Mapping data
@@ -57,30 +57,36 @@
 			price.put("GiaBan", rs.getInt("GiaBan"));
 			goldPriceTable.put(rs.getString("LoaiVang"), price);
 		}
-		
-		// Process link
-		String link = "GiaVangContent.jsp?";
-		link += "&buy9999=" + goldPriceTable.get("9999").get("GiaMua");
-		link += "&sell9999=" + goldPriceTable.get("9999").get("GiaBan");
-		link += "&buyNuTrang24K=" + goldPriceTable.get("NuTrang24K").get("GiaMua");
-		link += "&sellNuTrang24K=" + goldPriceTable.get("NuTrang24K").get("GiaBan");
-		link += "&buy680=" + goldPriceTable.get("680").get("GiaMua");
-		link += "&sell680=" + goldPriceTable.get("680").get("GiaBan");
-		link += "&buy625=" + goldPriceTable.get("625").get("GiaMua");
-		link += "&sell625=" + goldPriceTable.get("625").get("GiaBan");
-		link += "&buy610=" + goldPriceTable.get("610").get("GiaMua");
-		link += "&sell610=" + goldPriceTable.get("610").get("GiaBan");
-		link += "&buy600=" + goldPriceTable.get("600").get("GiaMua");
-		link += "&sell600=" + goldPriceTable.get("600").get("GiaBan");
-		link += "&buy560=" + goldPriceTable.get("560").get("GiaMua");
-		link += "&sell560=" + goldPriceTable.get("560").get("GiaBan");
-		if( request.getParameter("prevPage") != null) {
-			link += "&prevPage=" + request.getParameter("prevPage");
-		}
-		else
-			link += "&prevPage=index.jsp";
 %>
-		<jsp:forward page="<%=link%>" />
+<html>
+<head>
+	<script>
+		if (typeof(Storage) !== "undefined") {
+			localStorage.setItem("buy9999", <%= goldPriceTable.get("9999").get("GiaMua") %>);
+			localStorage.setItem("sell9999", <%= goldPriceTable.get("9999").get("GiaBan") %>);
+			localStorage.setItem("buyNuTrang24K", <%= goldPriceTable.get("NuTrang24K").get("GiaMua") %>);
+			localStorage.setItem("sellNuTrang24K", <%= goldPriceTable.get("NuTrang24K").get("GiaBan") %>);
+			localStorage.setItem("buy680", <%= goldPriceTable.get("680").get("GiaMua") %>);
+			localStorage.setItem("sell680", <%= goldPriceTable.get("680").get("GiaBan") %>);
+			localStorage.setItem("buy625", <%= goldPriceTable.get("625").get("GiaMua") %>);
+			localStorage.setItem("sell625", <%= goldPriceTable.get("625").get("GiaBan") %>);
+			localStorage.setItem("buy610", <%= goldPriceTable.get("610").get("GiaMua") %>);
+			localStorage.setItem("sell610", <%= goldPriceTable.get("610").get("GiaBan") %>);
+			localStorage.setItem("buy600", <%= goldPriceTable.get("600").get("GiaMua") %>);
+			localStorage.setItem("sell600", <%= goldPriceTable.get("600").get("GiaBan") %>);
+			localStorage.setItem("buy560", <%= goldPriceTable.get("560").get("GiaMua") %>);
+			localStorage.setItem("sell560", <%= goldPriceTable.get("560").get("GiaBan") %>);
+			
+			window.location = "../GiaVang.html";
+		}else {
+			alert("Sorry, your browser does not support Web Storage...");
+			window.location = "../index.jsp";
+		}
+	</script>
+</head>
+<body>
+</body>
+</html>		
 <%
 	}// End Content Page
 %>
