@@ -42,106 +42,121 @@
 <header class="w3-container w3-teal">
         <h1>Cập Nhật Giá</h1>
     </header>
-    
+    <form action="GiaVang.jsp" method="get">
     <div class="w3-container">
         <div class="w3-half w3-container">
             <p>
-                <label>9999 Bán:</label>
-                <input id="sell9999" class="w3-input" onfocus="$(this).select()" type="number" value=<%= request.getParameter("price")%>>
+                <label>999.9 Bán:</label>
+                <input name="sell9999" class="w3-input" type="number" value=<%= request.getParameter("sell9999")%>>
                 
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
-                <label>9999 Mua:</label>
-                <input id="buy9999" class="w3-input" type="number">
+                <label>999.9 Mua:</label>
+                <input name="buy9999" class="w3-input" type="number" value=<%= request.getParameter("buy9999")%>>
             </p>
         </div>
         <div class="w3-container w3-center">
-            <button class="w3-btn w3-blue" onclick="updatePrice()">Tính Theo Giá 9999</button>
-            <button class="w3-btn w3-green" style="width:33%">Lưu và Thoát</button>
-            <button class="w3-btn w3-red">Không Lưu và Thoát</button>
+        	<input hidden name="update" value="true">
+            <a class="w3-btn w3-blue" onclick="updatePrice()">Tính Theo Giá 999.9</a>
+            <button class="w3-btn w3-green" type="submit" style="width:33%">Lưu và Thoát</button>
+            <a class="w3-btn w3-red" href=<%= request.getParameter("prevPage")%>>Không Lưu và Thoát</a>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>Nữ Trang 24k Bán:</label>
-                <input id="sellNuTrang24K" class="w3-input" type="number">
+                <input name="sellNuTrang24K" class="w3-input" type="number" value=<%= request.getParameter("sellNuTrang24K")%>>
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>Nữ Trang 24k Mua:</label>
-                <input id="buyNuTrang24K" class="w3-input" type="number">
+                <input name="buyNuTrang24K" class="w3-input" type="number" value=<%= request.getParameter("buyNuTrang24K")%>>
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>680 Bán:</label>
-                <input id="sell680" class="w3-input" type="number">
+                <input name="sell680" class="w3-input" type="number" value=<%= request.getParameter("sell680")%>>
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>680 Mua:</label>
-                <input id="buy680" class="w3-input" type="number">
+                <input name="buy680" class="w3-input" type="number" value=<%= request.getParameter("buy680")%>>
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>625 Bán:</label>
-                <input id="sell625" class="w3-input" type="number">
+                <input name="sell625" class="w3-input" type="number" value=<%= request.getParameter("sell625")%>>
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>625 Mua:</label>
-                <input id="buy625" class="w3-input" type="number">
+                <input name="buy625" class="w3-input" type="number" value=<%= request.getParameter("buy625")%>>
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>610 Bán:</label>
-                <input id="sell610" class="w3-input" type="number">
+                <input name="sell610" class="w3-input" type="number" value=<%= request.getParameter("sell610")%>>
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>610 Mua:</label>
-                <input id="buy610" class="w3-input" type="number">
+                <input name="buy610" class="w3-input" type="number" value=<%= request.getParameter("buy610")%>>
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>600 Bán:</label>
-                <input id="sell600" class="w3-input" type="number">
+                <input name="sell600" class="w3-input" type="number" value=<%= request.getParameter("sell600")%>>
             </p>
         </div>
         <div class="w3-half w3-container">
             <p>
                 <label>600 Mua:</label>
-                <input id="buy600" class="w3-input" type="number">
+                <input name="buy600" class="w3-input" type="number" value=<%= request.getParameter("buy600")%>>
+            </p>
+        </div>
+        <div class="w3-half w3-container">
+            <p>
+                <label>560 Bán:</label>
+                <input name="sell560" class="w3-input" type="number" value=<%= request.getParameter("sell560")%>>
+            </p>
+        </div>
+        <div class="w3-half w3-container">
+            <p>
+                <label>560 Mua:</label>
+                <input name="buy560" class="w3-input" type="number" value=<%= request.getParameter("buy560")%>>
             </p>
         </div>
         
     </div>
-    
+    </form>
     <script src="js/common.js"></script>
     <script>
         // Update all price from buy9999 price
         function updatePrice() {
-            var buyPrice = $('#sell9999').val();
-            $('#buy9999').val(buyPrice - 70);
-            $('#sellNuTrang24K').val(buyPrice - 10);
-            $('#sell680').val(Math.ceil(buyPrice*.73));
-            $('#sell625').val(Math.ceil(buyPrice*.675));
-            $('#sell610').val(Math.ceil(buyPrice*.66));
-            $('#sell600').val(Math.ceil(buyPrice*.65));
+            var sellPrice = $('input[name*="sell9999"]').val();
+            $('input[name*="buy9999"]').val(sellPrice - 70);
+            $('input[name*="sellNuTrang24K"]').val(sellPrice - 15);
+            $('input[name*="sell680"]').val(Math.ceil(sellPrice*.73));
+            $('input[name*="sell625"]').val(Math.ceil(sellPrice*.675));
+            $('input[name*="sell610"]').val(Math.ceil(sellPrice*.66));
+            $('input[name*="sell600"]').val(Math.ceil(sellPrice*.65));
+            $('input[name*="sell560"]').val(Math.ceil(sellPrice*.64));
             
-            $('#buyNuTrang24K').val($('#sellNuTrang24K').val() - 80);
-            $('#buy680').val($('#sell680').val() - 80);
-            $('#buy625').val($('#sell625').val() - 80);
-            $('#buy610').val($('#sell610').val() - 80);
-            $('#buy600').val($('#sell600').val() - 80);
+            $('input[name*="buyNuTrang24K"]').val($('input[name*="sellNuTrang24K"]').val() - 80);
+            $('input[name*="buy680"]').val($('input[name*="sell680"]').val() - 240);
+            $('input[name*="buy625"]').val($('input[name*="sell625"]').val() - 240);
+            $('input[name*="buy610"]').val($('input[name*="sell610"]').val() - 240);
+            $('input[name*="buy600"]').val($('input[name*="sell600"]').val() - 240);
+            $('input[name*="buy560"]').val($('input[name*="sell560"]').val() - 280);
         }
     </script>
 </body>
