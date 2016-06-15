@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+.ipadMiniScreen {
+	border: solid 1px red;
+	width: 768px;
+	height: 1024px;
+	left: 0px;
+	z-index: -1;
+	position: absolute;
+}
+
+.iphoneScreen {
+	border: solid 1px green;
+	width: 480px;
+	height: 640px;
+	position: fixed;
+	z-index: -1;
+}
+
+input[type] {
+	font-size: 2.0em;
+	height: 100%;
+}
