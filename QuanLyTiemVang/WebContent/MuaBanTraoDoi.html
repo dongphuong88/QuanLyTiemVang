@@ -42,7 +42,7 @@
                 <td id="buy560" style="text-align:right;"></td>
             </tr>
             <tr>
-                <th scope="row">Ban</th>
+                <th scope="row">Bán</th>
                 <td id="sell9999" style="text-align:right;">30,000</td>
                 <td id="sellNuTrang24K" style="text-align:right;">80,000</td>
                 <td id="sell680" style="text-align:right;"></td>
@@ -70,12 +70,36 @@
             <button class="w3-btn w3-green w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="calBuy()">Tính</button>
             <button class="w3-btn w3-red w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="clearBuy()">Xóa</button>
         </div>
-
     </div>
-    <input class="w3-input" type="number">
+    <div class="hideActionButton showSell" hidden>
+        <div id="sellRow">
+            <div id="sellFirstRow"></div>
+        </div>
+        <div class="w3-container w3-center" style="width:80%">
+            <button class="w3-btn w3-blue w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="addSellRow()">Thêm</button>
+            <button class="w3-btn w3-green w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="calSell()">Tính</button>
+            <button class="w3-btn w3-red w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="clearSell()">Xóa</button>
+        </div>
+    </div>
+    <div class="hideActionButton showTrade" hidden>
+        <div id="buyTradeRow" class="w3-container w3-card-4" style="margin-bottom:20px; padding-bottom:20px">
+            <header class="w3-green"><h3>Mua</h3></header>
+            <div id="buyFirstTradeRow" class="w3-card-4"></div>
+        </div>
+        <div id="sellTradeRow" class="w3-container w3-card-4" style="margin-bottom:20px; padding-bottom:20px">
+            <header class="w3-green"><h3>Bán</h3></header>
+            <div id="sellFirstTradeRow"></div>
+        </div>
+        <div class="w3-container w3-center" style="width:80%">
+            <button class="w3-btn w3-blue w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="addBuyTradeRow()">Thêm Mua</button>
+            <button class="w3-btn w3-blue w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="addSellTradeRow()">Thêm Bán</button>
+            <button class="w3-btn w3-green w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="calSell()">Tính</button>
+            <button class="w3-btn w3-red w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="clearSell()">Xóa</button>
+        </div>
+    </div>
 
     <script>
-        // Mapping Data
+        /******** Mapping Data **********/
         $('#sell9999').html(localStorage.getItem("sell9999"));
         $('#buy9999').html(localStorage.getItem("buy9999"));
         $('#sellNuTrang24K').html(localStorage.getItem("sellNuTrang24K"));
@@ -90,24 +114,42 @@
         $('#buy600').html(localStorage.getItem("buy600"));
         $('#sell560').html(localStorage.getItem("sell560"));
         $('#buy560').html(localStorage.getItem("buy560"));
+        /******** END Mapping Data **********/
         
+        /******** Action button functions ******/
         // Button Actions
         function clickBuy() {
             $('.hideActionButton').hide();
             $('.showBuy').show();
-            $('#head').html('<button class="w3-btn w3-red w3-xlarge w3-round-large w3-padding-large" onclick="clickBack()">Quay Lại</button> Mua');
+            $('#head').html('<button class="w3-btn w3-yellow w3-xlarge w3-round-large w3-padding-large" onclick="clickBack()">Quay Lại</button> Mua');
+            addFirstBuyRow();
+        }
+        function clickSell() {
+            $('.hideActionButton').hide();
+            $('.showSell').show();
+            $('#head').html('<button class="w3-btn w3-yellow w3-xlarge w3-round-large w3-padding-large" onclick="clickBack()">Quay Lại</button> Bán');
+            addFirstSellRow();
+        }
+        function clickTrade() {
+            $('.hideActionButton').hide();
+            $('.showTrade').show();
+            $('#head').html('<button class="w3-btn w3-yellow w3-xlarge w3-round-large w3-padding-large" onclick="clickBack()">Quay Lại</button> Đổi');
+            addFirstSellTradeRow();
+            addFirstBuyTradeRow();
         }
         function clickBack() {
             $('.hideActionButton').hide();
             $('.showActionButton').show();
             $('#head').html('Loại Giao Dịch');
         }
+        /******** END Action button functions ******/
 
+        /******** Buy Functions ******/
         // Add first Buy row
-        $(function () {
+        function addFirstBuyRow() {
             var html = '<div class="buyRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Mua:</label>' + '<select class="w3-select">' + '<option value="undefined" disabled selected>Chọn</option>' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Bù (ngàn/chỉ):</label> <input class="w3-input buTien"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left"></div><div>';
             $('#buyFirstRow').html(html);
-        });
+        }
         // Add more Buy row
         function addBuyRow() {
             var html = '<div class="buyRow extraBuyRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Mua:</label>'+ '<select class="w3-select">' + '<option value="undefined" disabled selected>Chọn</option>' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Bù (ngàn/chỉ):</label> <input class="w3-input buTien"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left">' + '<a class="w3-btn w3-xlarge" onclick="$(this).parent().parent().remove()"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>' + '</div></div>';
@@ -133,6 +175,51 @@
             $('#buyRow .extraBuyRow').remove();
             $('#buyRow input').val(0);
         }
+        /******** END Buy Functions ******/
+        
+        /******** Sell Functions ******/
+        // Add first Sell row
+        function addFirstSellRow() {
+            var html = '<div class="sellRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Bán:</label>' + '<select class="w3-select">' + '<option value="undefined" disabled selected>Chọn</option>' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Tiền Công:</label> <input class="w3-input tienCong"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left"></div><div>';
+            $('#sellFirstRow').html(html);
+        }
+        // Add more Sell row
+        function addSellRow() {
+            var html = '<div class="sellRow extraSellRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Bán:</label>'+ '<select class="w3-select">' + '<option value="undefined" disabled selected>Chọn</option>' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Tiền Công:</label> <input class="w3-input tienCong"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left">' + '<a class="w3-btn w3-xlarge" onclick="$(this).parent().parent().remove()"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>' + '</div></div>';
+            $('#sellRow').append(html);
+        }
+        // Cal Sell
+        function calSell() {
+            var total = 0, tagID, price, weight, tienCong;
+            $('#sellRow .sellRow').each(function (index) {
+                var parent = $(this).find('select');
+                tagID = "#sell" + $(parent).find(':selected').val();
+                price = $(tagID).html();
+                weight = $(this).find('.canNang').val();
+                tienCong = $(this).find('.tienCong').val();
+                total += Math.ceil(price * weight / 100);
+            });
+            if( isNaN(total) || 0 == total)
+                alert("calSell");
+            
+        }
+        // Clear Sell Form
+        function clearSell() {
+            $('#sellRow .extraSellRow').remove();
+            $('#sellRow input').val(0);
+        }
+        /******** END Buy Functions ******/
+        
+        /******** Trade Functions ******/
+        // Add first Sell row
+        function addFirstSellTradeRow() {
+            var html = '<div class="sellTradeRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Bán:</label>' + '<select class="w3-select">' + '<option value="undefined" disabled selected>Chọn</option>' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Tiền Công:</label> <input class="w3-input tienCong"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left"></div><div>';
+            $('#sellFirstTradeRow').html(html);
+            
+            html = '<div class="buyTradeRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Mua:</label>' + '<select class="w3-select">' + '<option value="undefined" disabled selected>Chọn</option>' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Bù (ngàn/chỉ):</label> <input class="w3-input buTien"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left"></div><div>';
+            $('#buyFirstTradeRow').html(html);
+        }
+        /******** END Trade Functions ******/
     </script>
     <script src="js/common.js"></script>
 </body>
