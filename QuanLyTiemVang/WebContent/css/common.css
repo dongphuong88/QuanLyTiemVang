@@ -21,3 +21,6 @@ input[type] {
 	font-size: 2.0em;
 	height: 100%;
 }
+select {
+    font-size: 1.5em;
+}

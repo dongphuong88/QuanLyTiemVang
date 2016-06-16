@@ -1,7 +1,9 @@
-// auto select
+// auto select has to be done when page ready
+$(function () {
 $('input').on("focus", function() {
     $(this).select();
 });
+})
 
 // Retrieve GET parameter
 function getParam(name){

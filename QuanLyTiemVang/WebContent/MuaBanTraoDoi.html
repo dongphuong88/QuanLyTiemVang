@@ -1,185 +1,140 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--
-<title>Foundation | Welcome</title>
-<link rel="stylesheet" href="foundation/css/foundation.css" />
-<link rel="stylesheet" href="foundation/css/app.css" />
--->
     <link rel="stylesheet" href="w3/css/w3.css">
     <link rel="stylesheet" href="w3/js/w3data.js">
+    <link rel="stylesheet" href="css/common.css">
     <script src="js/jquery-2.2.4.min.js"></script>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.0/css/font-awesome.min.css">
-    <style>
-        .ipadMiniScreen {
-            border: solid 1px red;
-            width: 768px;
-            height: 1024px;
-            left: 0px;
-            z-index: -1;
-            position: absolute;
-        }
-        
-        .iphoneScreen {
-            border: solid 1px green;
-            width: 480px;
-            height: 640px;
-            position: fixed;
-            z-index: -1;
-        }
-        
-        input[type] {
-            font-size: 2.0em;
-            height: 100%;
-        }
-    </style>
 </head>
+
 <body>
     <div class="row" style="border:solid 1px green;">
         <div class="ipadMiniScreen"></div>
         <div class="iphoneScreen"></div>
     </div>
     <div>
-    <table class="w3-table w3-bordered w3-striped w3-card-4">
-  <thead>
-      <tr class="w3-red">
-          <th scope="col"></th>
-            <th scope="col" style="text-align:right;">999.9</th>
-            <th scope="col" style="text-align:right;">Nữ Trang 24K</th>
-            <th scope="col" style="text-align:right;">680</th>
-            <th scope="col" style="text-align:right;">625</th>
-          <th scope="col" style="text-align:right;">610</th>
-          <th scope="col" style="text-align:right;">600</th>
-          <th scope="col" style="text-align:right;">560</th>
-          </tr>
-  </thead>
-  <tr>
-    <th scope="row">Mua</th>
-    <td style="text-align:right;">50,000</td>
-    <td style="text-align:right;">30,000</td>
-    <td style="text-align:right;">100,000</td>
-    <td style="text-align:right;">80,000</td>
-  </tr>
-  <tr>
-    <th scope="row">Ban</th>
-    <td style="text-align:right;">10,000</td>
-    <td style="text-align:right;">5,000</td>
-    <td style="text-align:right;">12,000</td>
-    <td style="text-align:right;">9,000</td>
-  </tr>
-</table>
-        </div>
-<header class="w3-container w3-teal">
-        <h1>Cập nhật giá</h1>
-    </header>
-    
-    <div class="w3-container">
-        <div class="w3-half w3-container">
-            <p>
-                <label>9999 Bán:</label>
-                <input id="sell9999" class="w3-input" onfocus="$(this).select()" type="number">
-                
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>9999 Mua:</label>
-                <input id="buy9999" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-container w3-center">
-            <button class="w3-btn w3-blue" onclick="updatePrice()">Tính theo giá 9999</button>
-            <button class="w3-btn w3-green" style="width:33%">Lưu giá</button>
-            <button class="w3-btn w3-red">Không lưu và thoát</button>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>Nữ trang 24k Bán:</label>
-                <input id="sellNuTrang24K" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>Nữ trang 24k Mua:</label>
-                <input id="buyNuTrang24K" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>680 Bán:</label>
-                <input id="sell680" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>680 Mua:</label>
-                <input id="buy680" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>625 Bán:</label>
-                <input id="sell625" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>625 Mua:</label>
-                <input id="buy625" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>610 Bán:</label>
-                <input id="sell610" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>610 Mua:</label>
-                <input id="buy610" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>600 Bán:</label>
-                <input id="sell600" class="w3-input" type="number">
-            </p>
-        </div>
-        <div class="w3-half w3-container">
-            <p>
-                <label>600 Mua:</label>
-                <input id="buy600" class="w3-input" type="number">
-            </p>
-        </div>
-        
+        <table class="w3-table w3-bordered w3-striped w3-card-4">
+            <thead>
+                <tr class="w3-red">
+                    <th scope="col"></th>
+                    <th scope="col" style="text-align:right;">999.9</th>
+                    <th scope="col" style="text-align:right;">Nữ Trang 24K</th>
+                    <th scope="col" style="text-align:right;">680</th>
+                    <th scope="col" style="text-align:right;">625</th>
+                    <th scope="col" style="text-align:right;">610</th>
+                    <th scope="col" style="text-align:right;">600</th>
+                    <th scope="col" style="text-align:right;">560</th>
+                </tr>
+            </thead>
+            <tr>
+                <th scope="row">Mua</th>
+                <td id="buy9999" style="text-align:right;"></td>
+                <td id="buyNuTrang24K" style="text-align:right;">100,000</td>
+                <td id="buy680" style="text-align:right;"></td>
+                <td id="buy625" style="text-align:right;"></td>
+                <td id="buy610" style="text-align:right;"></td>
+                <td id="buy600" style="text-align:right;"></td>
+                <td id="buy560" style="text-align:right;"></td>
+            </tr>
+            <tr>
+                <th scope="row">Ban</th>
+                <td id="sell9999" style="text-align:right;">30,000</td>
+                <td id="sellNuTrang24K" style="text-align:right;">80,000</td>
+                <td id="sell680" style="text-align:right;"></td>
+                <td id="sell625" style="text-align:right;"></td>
+                <td id="sell610" style="text-align:right;"></td>
+                <td id="sell600" style="text-align:right;"></td>
+                <td id="sell560" style="text-align:right;"></td>
+            </tr>
+        </table>
     </div>
-    
-    <footer class="w3-container">
-        <h6>Lần cuối cập nhật lúc: </h6>
-    </footer>
-    <script src="js/common.js"></script>
+    <header class="w3-container w3-teal">
+        <h1 id="head">Loại Giao Dịch</h1>
+    </header>
+    <div class="w3-container w3-center hideActionButton showActionButton">
+        <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="clickBuy()">Mua</a>
+        <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="clickSell()">Bán</a>
+        <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="clickTrade()">Trao Đổi</a>
+    </div>
+    <div class="hideActionButton showBuy" hidden>
+        <div id="buyRow">
+            <div id="buyFirstRow"></div>
+        </div>
+        <div class="w3-container w3-center" style="width:80%">
+            <button class="w3-btn w3-blue w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="addBuyRow()">Thêm</button>
+            <button class="w3-btn w3-green w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="calBuy()">Tính</button>
+            <button class="w3-btn w3-red w3-xlarge w3-round-large w3-padding-large" style="margin-top:10px" onclick="clearBuy()">Xóa</button>
+        </div>
+
+    </div>
+    <input class="w3-input" type="number">
+
     <script>
-        // Update all price from buy9999 price
-        function updatePrice() {
-            var buyPrice = $('#sell9999').val();
-            $('#buy9999').val(buyPrice - 70);
-            $('#sellNuTrang24K').val(buyPrice - 10);
-            $('#sell680').val(Math.ceil(buyPrice*.73));
-            $('#sell625').val(Math.ceil(buyPrice*.675));
-            $('#sell610').val(Math.ceil(buyPrice*.66));
-            $('#sell600').val(Math.ceil(buyPrice*.65));
+        // Mapping Data
+        $('#sell9999').html(localStorage.getItem("sell9999"));
+        $('#buy9999').html(localStorage.getItem("buy9999"));
+        $('#sellNuTrang24K').html(localStorage.getItem("sellNuTrang24K"));
+        $('#buyNuTrang24K').html(localStorage.getItem("buyNuTrang24K"));
+        $('#sell680').html(localStorage.getItem("sell680"));
+        $('#buy680').html(localStorage.getItem("buy680"));
+        $('#sell625').html(localStorage.getItem("sell625"));
+        $('#buy625').html(localStorage.getItem("buy625"));
+        $('#sell610').html(localStorage.getItem("sell610"));
+        $('#buy610').html(localStorage.getItem("buy610"));
+        $('#sell600').html(localStorage.getItem("sell600"));
+        $('#buy600').html(localStorage.getItem("buy600"));
+        $('#sell560').html(localStorage.getItem("sell560"));
+        $('#buy560').html(localStorage.getItem("buy560"));
+        
+        // Button Actions
+        function clickBuy() {
+            $('.hideActionButton').hide();
+            $('.showBuy').show();
+            $('#head').html('<button class="w3-btn w3-red w3-xlarge w3-round-large w3-padding-large" onclick="clickBack()">Quay Lại</button> Mua');
+        }
+        function clickBack() {
+            $('.hideActionButton').hide();
+            $('.showActionButton').show();
+            $('#head').html('Loại Giao Dịch');
+        }
+
+        // Add first Buy row
+        $(function () {
+            var html = '<div class="buyRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Mua:</label>' + '<select class="w3-select">' + '<option value="undefined" disabled selected>Chọn</option>' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Bù (ngàn/chỉ):</label> <input class="w3-input buTien"' + 'type="number" value="0">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left"></div><div>';
+            $('#buyFirstRow').html(html);
+        });
+        // Add more Buy row
+        function addBuyRow() {
+            var html = '<div class="buyRow extraBuyRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Mua:</label>'+ '<select class="w3-select">' + '<option value="undefined" disabled selected>Chọn</option>' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Bù (ngàn/chỉ):</label> <input class="w3-input buTien"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left">' + '<a class="w3-btn w3-xlarge" onclick="$(this).parent().parent().remove()"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>' + '</div></div>';
+            $('#buyRow').append(html);
+        }
+        // Cal Buy
+        function calBuy() {
+            var total = 0, tagID, price, weight, extraSub;
+            $('#buyRow .buyRow').each(function (index) {
+                var parent = $(this).find('select');
+                tagID = "#buy" + $(parent).find(':selected').val();
+                price = $(tagID).html();
+                weight = $(this).find('.canNang').val();
+                extraSub = $(this).find('.buTien').val();
+                total += Math.ceil((price - extraSub) * weight / 100);
+            });
+            if( isNaN(total) || 0 == total)
+                alert("test");
             
-            $('#buyNuTrang24K').val($('#sellNuTrang24K').val() - 80);
-            $('#buy680').val($('#sell680').val() - 80);
-            $('#buy625').val($('#sell625').val() - 80);
-            $('#buy610').val($('#sell610').val() - 80);
-            $('#buy600').val($('#sell600').val() - 80);
+        }
+        // Clear Buy Form
+        function clearBuy() {
+            $('#buyRow .extraBuyRow').remove();
+            $('#buyRow input').val(0);
         }
     </script>
+    <script src="js/common.js"></script>
 </body>
+
 </html>
