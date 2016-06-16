@@ -33,8 +33,8 @@
             </thead>
             <tr>
                 <th scope="row">Mua</th>
-                <td id="buy9999" style="text-align:right;"></td>
-                <td id="buyNuTrang24K" style="text-align:right;">100,000</td>
+                <td id="buy9999" style="text-align:right;">5000</td>
+                <td id="buyNuTrang24K" style="text-align:right;">1000</td>
                 <td id="buy680" style="text-align:right;"></td>
                 <td id="buy625" style="text-align:right;"></td>
                 <td id="buy610" style="text-align:right;"></td>
@@ -43,8 +43,8 @@
             </tr>
             <tr>
                 <th scope="row">Bán</th>
-                <td id="sell9999" style="text-align:right;">30,000</td>
-                <td id="sellNuTrang24K" style="text-align:right;">80,000</td>
+                <td id="sell9999" style="text-align:right;">3000</td>
+                <td id="sellNuTrang24K" style="text-align:right;">8000</td>
                 <td id="sell680" style="text-align:right;"></td>
                 <td id="sell625" style="text-align:right;"></td>
                 <td id="sell610" style="text-align:right;"></td>
@@ -60,6 +60,7 @@
         <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="clickBuy()">Mua</a>
         <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="clickSell()">Bán</a>
         <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="clickTrade()">Trao Đổi</a>
+        <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="calTotal()">Total</a>
     </div>
     <div class="hideActionButton showBuy" hidden>
         <div id="buyRow">
@@ -105,13 +106,67 @@
 
             </div>
         </div>
-
+        <div id="calArea">
+            <div id="calBuy9999"></div>
+            <div id="calBuy9999La"></div>
+            <div id="calSell9999"></div>
+            <div id="calBuyNuTrang24K"></div>
+            <div id="calBuyNuTrang24KLa"></div>
+            <div id="calSellNuTrang24K"></div>
+            <div id="calBuy680"></div>
+            <div id="calBuy680La"></div>
+            <div id="calSell680"></div>
+            <div id="calBuy625"></div>
+            <div id="calBuy625La"></div>
+            <div id="calSell625"></div>
+            <div id="calBuy610"></div>
+            <div id="calBuy610La"></div>
+            <div id="calSell610"></div>
+            <div id="calBuy600"></div>
+            <div id="calBuy600La"></div>
+            <div id="calSell600"></div>
+            <div id="calBuy560"></div>
+            <div id="calBuy560La"></div>
+            <div id="calSell560"></div>
+        </div>
+    </div>
+    <div class="hideActionButton showTotal" hidden>
+        <div class="w3-container" style="margin-top:10px;">
+            <div class="w3-container" style="width:35%;float:left">
+                <label class="w3-label">Tổng Cộng:</label>
+                <input id="totalAmount" class="w3-input w3-text-red" type="number" style="font-size:3em">
+            </div>
+            <div class=" w3-container" style="width:35%;float:left">
+                <label class="w3-label">Tiền Thu:</label>
+                <input id="getAmount" class="w3-input" type="number" style="font-size:3em">
+            </div>
+            <div style="width:5%;float:left">
+                <a class="w3-btn w3-blue" style="padding:20px;margin:20px -15px" onclick="$('#returnAmount').val($('#getAmount').val() - $('#totalAmount').val())"><i class="fa fa-calculator" aria-hidden="true"></i></a>
+            </div>
+            <div class=" w3-container" style="width:25%;float:left">
+                <label class="w3-label">Tiền Thối:</label>
+                <input id="returnAmount" class="w3-input w3-text-green" type="number" style="font-size:3em">
+            </div>
+        </div>
+        <!-- START Detail -->
+        <div class="w3-container">
+        <header class="w3-green">
+                <h3 style="margin-bottom:0px">Chi Tiết</h3></header>
+        </div>
+        <div class="w3-container">
+          <ul class="w3-ul w3-border" id="detailContent" >test
+            </ul>
+        </div>
+        <!-- END Detail -->
+    </div>
             <script>
                 /******** Mapping Data **********/
+                /*
                 $('#sell9999').html(localStorage.getItem("sell9999"));
                 $('#buy9999').html(localStorage.getItem("buy9999"));
                 $('#sellNuTrang24K').html(localStorage.getItem("sellNuTrang24K"));
                 $('#buyNuTrang24K').html(localStorage.getItem("buyNuTrang24K"));
+                */
                 $('#sell680').html(localStorage.getItem("sell680"));
                 $('#buy680').html(localStorage.getItem("buy680"));
                 $('#sell625').html(localStorage.getItem("sell625"));
@@ -168,19 +223,37 @@
                 }
                 // Cal Buy
                 function calBuy() {
-                    var total = 0,
-                        tagID, price, weight, extraSub;
+                    var total = 0, selectedOption, isProcessFurther = true,
+                        tagID, goldType, price, weight, extraSub, rowTotal;
+                    var detailListHtml = "";
                     $('#buyRow .buyRow').each(function (index) {
-                        var parent = $(this).find('select');
-                        tagID = "#buy" + $(parent).find(':selected').val();
+                        selectedOption = $(this).find('select').find(':selected');
+                        goldType = selectedOption.text();
+                        tagID = "#buy" + selectedOption.val();
                         price = $(tagID).html();
                         weight = $(this).find('.canNang').val();
                         extraSub = $(this).find('.buTien').val();
-                        total += Math.ceil((price - extraSub) * weight / 100);
+                        rowTotal = Math.ceil((price - extraSub) * weight / 100);
+                        if (isNaN(rowTotal) || 0 >= rowTotal) {
+                            alert("Kết quả sai. Xin vui lòng kiểm tra lại giá trị");
+                            isProcessFurther = false;
+                            return;
+                        }
+                            
+                        // Add Detail
+                        detailListHtml += '<li>Mua: '
+                                        + readGoldWeight(weight) 
+                                        + ' ,vàng: ' + goldType
+                                        + ' ,tiền bù: ' + extraSub + ' ngàn/chỉ'
+                                        + ' ,tổng cộng: ' + rowTotal + ' ngàn'
+                                        +'</li>';
+                        
+                        total += rowTotal;
                     });
-                    if (isNaN(total) || 0 == total)
-                        alert("test");
-
+                    if( !isProcessFurther ) return;
+                    
+                    $('#detailContent').html(detailListHtml);
+                    calTotal(-total);
                 }
                 // Clear Buy Form
                 function clearBuy() {
@@ -202,18 +275,38 @@
                 }
                 // Cal Sell
                 function calSell() {
-                    var total = 0,
-                        tagID, price, weight, tienCong;
+                    var total = 0, selectedOption, isProcessFurther = true,
+                        tagID, goldType, price, weight, workerFee = 0, rowTotal;
+                    var detailListHtml = "";
                     $('#sellRow .sellRow').each(function (index) {
-                        var parent = $(this).find('select');
-                        tagID = "#sell" + $(parent).find(':selected').val();
+                        selectedOption = $(this).find('select').find(':selected');
+                        goldType = selectedOption.text();
+                        tagID = "#sell" + selectedOption.val();
                         price = $(tagID).html();
                         weight = $(this).find('.canNang').val();
-                        tienCong = $(this).find('.tienCong').val();
-                        total += Math.ceil(price * weight / 100);
+                        workerFee = $(this).find('.tienCong').val();
+                        
+                        rowTotal = Math.ceil( (price * weight / 1000) + +workerFee);
+                        if (isNaN(rowTotal) || 0 >= rowTotal) {
+                            alert("Kết quả sai. Xin vui lòng kiểm tra lại giá trị");
+                            isProcessFurther = false;
+                            return;
+                        }
+                            
+                        // Add Detail
+                        detailListHtml += '<li>Bán: '
+                                        + readGoldWeight(weight) 
+                                        + ' ,vàng ' + goldType
+                                        + ' ,tiền công ' + workerFee + ' ngàn'
+                                        + ' ,tổng cộng ' + rowTotal + ' ngàn'
+                                        +'</li>';
+                        
+                        total += rowTotal;
                     });
-                    if (isNaN(total) || 0 == total)
-                        alert("calSell");
+                    if( !isProcessFurther ) return;
+                    
+                    $('#detailContent').html(detailListHtml);
+                    calTotal(total);
 
                 }
                 // Clear Sell Form
@@ -229,13 +322,13 @@
                     var html = '<div class="sellTradeRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Bán:</label>' + '<select class="w3-select">' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Tiền Công:</label> <input class="w3-input tienCong"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left"></div><div>';
                     $('#sellFirstTradeRow').html(html);
 
-                    html = '<div class="buyTradeRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Mua:</label>' + '<select class="w3-select">' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Bù (ngàn/chỉ):</label> <input class="w3-input buTien"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left"><input class="w3-check" type="checkbox">'
+                    html = '<div class="buyTradeRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Mua:</label>' + '<select class="w3-select">' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Bù (ngàn/chỉ):</label> <input class="w3-input buTien"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container w3-right" style="width:10%;float:left"><input class="w3-check isLa" type="checkbox">'
                     + '<label class="w3-validate">Lạ</label></div><div>';
                     $('#buyFirstTradeRow').html(html);
                 }
                 // Add more BuyTrade row
                 function addBuyTradeRow() {
-                    var html = '<div class="buyTradeRow extraBuyTradeRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Mua:</label>' + '<select class="w3-select">' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Bù (ngàn/chỉ):</label> <input class="w3-input buTien"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:10%;float:left"><input class="w3-check" type="checkbox">'
+                    var html = '<div class="buyTradeRow extraBuyTradeRow"><div class="w3-container" style="width:30%;float:left">' + '<label>Loại Mua:</label>' + '<select class="w3-select">' + '<option value="9999">999.9</option>' + '<option value="NuTrang24K">Nữ Trang 24K</option>' + '<option value="680">680</option>' + '<option value="625">625</option>' + '<option value="610">610</option>' + '<option value="600">600</option>' + '<option value="560">560</option>' + '</select>' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Cân Nặng (ly):</label> <input class="w3-input canNang"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:30%;float:left">' + '<label>Bù (ngàn/chỉ):</label> <input class="w3-input buTien"' + 'type="number" value="0" onfocus="$(this).select()">' + '</div>' + '<div class="w3-container" style="width:10%;float:left"><input class="w3-check isLa" type="checkbox">'
                     + '<label class="w3-validate">Lạ</label>' + '<a class="w3-btn w3-small" style="margin-top:12px;" onclick="$(this).parent().parent().remove()"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>' + '</div></div>';
                     $('#buyTradeRow').append(html);
                 }
@@ -251,17 +344,73 @@
                 }
                 // Cal Trade
                 function calTrade() {
-                    var total = {
-                        "680": 300,
-                        "9999": 200
-                    };
-                    alert(total["680"]);
+                    var selectedOption,
+                        goldType, price, weight, workerFee = 0, extraSub;
+                    // Clear all CalArea
+                    $('#calArea').children().html("");
+                    
+                    // Retrieve all buyTradeRow, La separate
+                    $('#buyTradeRow .buyTradeRow').each(function (index) {
+                        selectedOption = $(this).find('select').find(':selected');
+                        goldType = selectedOption.text();
+                        price = $("#buy" + selectedOption.val()).html();
+                        weight = $(this).find('.canNang').val();
+                        extraSub = $(this).find('.buTien').val();
+                        
+                        $('#calBuy'+selectedOption.val()).attr("price", price);
+                        if( $(this).find('.isLa').is(":checked"))
+                            $('#calBuy'+selectedOption.val()+'La').append('<span class="canNang">' + weight + '</span><span class="buTien">' + extraSub);
+                        else
+                            $('#calBuy'+selectedOption.val()).append('<span class="canNang">' + weight + '</span><span class="buTien">' + extraSub);
+                    });
+                    // Retrieve all sellTradeRow
+                    $('#sellTradeRow .sellTradeRow').each(function (index) {
+                        selectedOption = $(this).find('select').find(':selected');
+                        goldType = selectedOption.text();
+                        price = $("#sell" + selectedOption.val()).html();
+                        weight = $(this).find('.canNang').val();
+                        workerFee = $(this).find('.tienCong').val();
+                        
+                        $('#calSell'+selectedOption.val()).attr("price", price);
+                        $('#calSell'+selectedOption.val()).append('<span class="canNang">' + weight + '</span><span class="tienCong">' + workerFee + '</span>');
+                    });
+                    
+                    // Calculate all 
+                    alert("trs");
+                    var totalBuyWeight=0, totalSellWeight=0, totalWorkerFee=0, totalExTraSub=0, currPrice=0, detailHtml="";
+                    $('#calBuy9999').each(function (index) {
+                        totalBuyWeight += $(this).find('.canNang').val();
+                        totalExtraSub += $(this).find('.buTien').val();
+                    });
+                    $('#calSell9999').each(function (index) {
+                        totalSellWeight += $(this).find('.canNang').val();
+                        totalWorkerFee += $(this).find('.tienCong').val();
+                    });
+                    if( )
+                    
+                    //$('#calArea').html();
+                    
+                    if( !isProcessFurther ) return;
+                    
+                    $('#detailContent').html(detailListHtml);
+                    //calTotal(total);
 
                 }
-
                 /******** END Trade Functions ******/
+                
+                /******** Total Functions ******/
+                function calTotal( totalAmount) {
+                    $('.hideActionButton').hide();
+                    $('.showTotal').show();
+                    $('#head').html('<button class="w3-btn w3-yellow w3-xlarge w3-round-large w3-padding-large" onclick="clickBack()">Quay Lại</button> Tổng Cộng');
+                    
+                    $('#totalAmount').val(totalAmount);
+                    $('#getAmount').val(0);
+                    $('#returnAmount').val(0);
+                }
+                /******** END Total Functions ******/
             </script>
-            <script src="js/common.js"></script>
+            <script src="./js/common.js"></script>
 </body>
 
 </html>
