@@ -22,13 +22,13 @@
             <thead>
                 <tr class="w3-red">
                     <th scope="col"></th>
-                    <th scope="col" style="text-align:right;">999.9</th>
-                    <th scope="col" style="text-align:right;">Nữ Trang 24K</th>
-                    <th scope="col" style="text-align:right;">680</th>
-                    <th scope="col" style="text-align:right;">625</th>
-                    <th scope="col" style="text-align:right;">610</th>
-                    <th scope="col" style="text-align:right;">600</th>
-                    <th scope="col" style="text-align:right;">560</th>
+                    <th scope="col" style="text-align:right;" id="name9999">999.9</th>
+                    <th scope="col" style="text-align:right;" id="nameNuTrang24K">Nữ Trang 24K</th>
+                    <th scope="col" style="text-align:right;" id="name680">680</th>
+                    <th scope="col" style="text-align:right;" id="name625">625</th>
+                    <th scope="col" style="text-align:right;" id="name610">610</th>
+                    <th scope="col" style="text-align:right;" id="name600">600</th>
+                    <th scope="col" style="text-align:right;" id="name560">560</th>
                 </tr>
             </thead>
             <tr>
@@ -60,7 +60,6 @@
         <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="clickBuy()">Mua</a>
         <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="clickSell()">Bán</a>
         <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="clickTrade()">Trao Đổi</a>
-        <a class="w3-btn w3-orange w3-xlarge w3-round-large w3-padding-jumbo" onclick="calTotal()">Total</a>
     </div>
     <div class="hideActionButton showBuy" hidden>
         <div id="buyRow">
@@ -106,7 +105,7 @@
 
             </div>
         </div>
-        <div id="calArea">
+        <div id="calArea" hidden>
             <div id="calBuy9999"></div>
             <div id="calBuy9999La"></div>
             <div id="calSell9999"></div>
@@ -286,7 +285,7 @@
                         weight = $(this).find('.canNang').val();
                         workerFee = $(this).find('.tienCong').val();
                         
-                        rowTotal = Math.ceil( (price * weight / 1000) + +workerFee);
+                        rowTotal = Math.ceil( (price * weight / 100) + +workerFee);
                         if (isNaN(rowTotal) || 0 >= rowTotal) {
                             alert("Kết quả sai. Xin vui lòng kiểm tra lại giá trị");
                             isProcessFurther = false;
@@ -344,7 +343,7 @@
                 }
                 // Cal Trade
                 function calTrade() {
-                    var selectedOption,
+                    var selectedOption, isProcessFurther = true,
                         goldType, price, weight, workerFee = 0, extraSub;
                     // Clear all CalArea
                     $('#calArea').children().html("");
@@ -352,48 +351,48 @@
                     // Retrieve all buyTradeRow, La separate
                     $('#buyTradeRow .buyTradeRow').each(function (index) {
                         selectedOption = $(this).find('select').find(':selected');
-                        goldType = selectedOption.text();
-                        price = $("#buy" + selectedOption.val()).html();
                         weight = $(this).find('.canNang').val();
                         extraSub = $(this).find('.buTien').val();
-                        
-                        $('#calBuy'+selectedOption.val()).attr("price", price);
+                        if( weight <= 0){
+                            alert("Kết quả sai. Xin vui lòng kiểm tra lại giá trị trong phần MUA");
+                            isProcessFurther = false;
+                            return;
+                        }
+                                                        
                         if( $(this).find('.isLa').is(":checked"))
-                            $('#calBuy'+selectedOption.val()+'La').append('<span class="canNang">' + weight + '</span><span class="buTien">' + extraSub);
+                            $('#calBuy'+selectedOption.val()+'La').append('<span><span class="canNang">' + weight + '</span><span class="buTien">' + extraSub + '</span></span>');
                         else
-                            $('#calBuy'+selectedOption.val()).append('<span class="canNang">' + weight + '</span><span class="buTien">' + extraSub);
+                            $('#calBuy'+selectedOption.val()).append('<span><span class="canNang">' + weight + '</span><span class="buTien">' + extraSub + '</span></span>');
                     });
+                    if( !isProcessFurther ) return; // Input failed
+                    
                     // Retrieve all sellTradeRow
                     $('#sellTradeRow .sellTradeRow').each(function (index) {
                         selectedOption = $(this).find('select').find(':selected');
-                        goldType = selectedOption.text();
-                        price = $("#sell" + selectedOption.val()).html();
                         weight = $(this).find('.canNang').val();
                         workerFee = $(this).find('.tienCong').val();
+                        if( weight <= 0){
+                            alert("Kết quả sai. Xin vui lòng kiểm tra lại giá trị trong phần BÁN");
+                            isProcessFurther = false;
+                            return;
+                        }
                         
-                        $('#calSell'+selectedOption.val()).attr("price", price);
-                        $('#calSell'+selectedOption.val()).append('<span class="canNang">' + weight + '</span><span class="tienCong">' + workerFee + '</span>');
+                        $('#calSell'+selectedOption.val()).append('<span><span class="canNang">' + weight + '</span><span class="tienCong">' + workerFee + '</span></span>');
                     });
+                    if( !isProcessFurther ) return; // Input failed
                     
                     // Calculate all 
-                    alert("trs");
-                    var totalBuyWeight=0, totalSellWeight=0, totalWorkerFee=0, totalExTraSub=0, currPrice=0, detailHtml="";
-                    $('#calBuy9999').each(function (index) {
-                        totalBuyWeight += $(this).find('.canNang').val();
-                        totalExtraSub += $(this).find('.buTien').val();
-                    });
-                    $('#calSell9999').each(function (index) {
-                        totalSellWeight += $(this).find('.canNang').val();
-                        totalWorkerFee += $(this).find('.tienCong').val();
-                    });
-                    if( )
+                    var total = 0;
+                    $('#detailContent').html("");
+                    total += calTradeTotalHelper("9999");
+                    total += calTradeTotalHelper("NuTrang24K");
+                    total += calTradeTotalHelper("680");
+                    total += calTradeTotalHelper("625");
+                    total += calTradeTotalHelper("610");
+                    total += calTradeTotalHelper("600");
+                    total += calTradeTotalHelper("560");
                     
-                    //$('#calArea').html();
-                    
-                    if( !isProcessFurther ) return;
-                    
-                    $('#detailContent').html(detailListHtml);
-                    //calTotal(total);
+                    calTotal(total);
 
                 }
                 /******** END Trade Functions ******/
@@ -407,6 +406,66 @@
                     $('#totalAmount').val(totalAmount);
                     $('#getAmount').val(0);
                     $('#returnAmount').val(0);
+                }
+                // Trade helper calculation 
+                function calTradeTotalHelper( goldTypeName) {
+                    
+                    var totalBuyWeight=0, totalBuyWeightLa=0, totalSellWeight=0, totalWorkerFee=0, totalExtraSub=0, totalExtraSubLa=0, currPrice=0, detailHtml="", rowTotal=0, total = 0;
+                    $('#calBuy'+goldTypeName).children().each(function (index) {
+                        totalBuyWeight += +$(this).find('.canNang').text();
+                        totalExtraSub += +$(this).find('.buTien').text();
+                    });
+                    $('#calBuy'+goldTypeName+'La').children().each(function (index) {
+                        totalBuyWeightLa += +$(this).find('.canNang').text();
+                        totalExtraSubLa += +$(this).find('.buTien').text();
+                    });
+                    $('#calSell'+goldTypeName).children().each(function (index) {
+                        totalSellWeight += +$(this).find('.canNang').text();
+                        totalWorkerFee += +$(this).find('.tienCong').text();
+                    });
+                    
+                    if( totalBuyWeight != 0 && totalSellWeight != 0) {
+                        if( totalBuyWeight > totalSellWeight) {
+                            rowTotal = (totalSellWeight - totalBuyWeight)*$('#buy'+goldTypeName).text()/100;
+                        }
+                        else {
+                            rowTotal = Math.ceil((totalSellWeight - totalBuyWeight)*$('#sell'+goldTypeName).text()/100 + totalWorkerFee);
+                        }
+                        
+                        detailHtml += '<li>Đổi: ' + readGoldWeight(totalBuyWeight) + ' cũ ,lấy ' + readGoldWeight(totalSellWeight) + ' mới ,vàng ' + $('#name'+goldTypeName).text() + ' ,tiền công ' + totalWorkerFee + ' ngàn ,tổng cộng ' + rowTotal + ' ngàn</li>';
+                        total += rowTotal;
+                    }
+                    else {
+                        if( totalSellWeight != 0) {
+                            rowTotal = Math.ceil( ($('#sell'+goldTypeName).text() * totalSellWeight / 100) + +totalWorkerFee);
+                            detailHtml += '<li>Bán: '
+                                        + readGoldWeight(totalSellWeight) 
+                                        + ' ,vàng ' + $('#name'+goldTypeName).text()
+                                        + ' ,tiền công ' + totalWorkerFee + ' ngàn'
+                                        + ' ,tổng cộng ' + rowTotal + ' ngàn'
+                                        +'</li>';
+                            total += rowTotal;
+                        }
+                        if( totalBuyWeight != 0) {
+                            rowTotal = Math.ceil((+$('#buy'+goldTypeName).text() - totalExtraSub) * totalBuyWeight / 100);
+                            detailHtml += '<li>Mua: '
+                                            + readGoldWeight(totalBuyWeight) 
+                                            + ' ,vàng: ' + $('#name'+goldTypeName).text()
+                                            + ' ,tiền bù: ' + totalExtraSub + ' ngàn/chỉ'
+                                            + ' ,tổng cộng: ' + rowTotal + ' ngàn'
+                                            +'</li>';
+                            total += -rowTotal;
+                        }
+                    }
+                    // Do La
+                    if( totalBuyWeightLa != 0) {
+                        rowTotal = Math.ceil((+$('#buy'+goldTypeName).text() - totalExtraSubLa) * totalBuyWeightLa / 100);
+                        detailHtml += '<li>Mua (đồ lạ): ' + readGoldWeight(totalBuyWeightLa)+ ' ,vàng: ' + $('#name'+goldTypeName).text() + ' ,tiền bù: ' + totalExtraSubLa + ' ngàn/chỉ' + ' ,tổng cộng: ' + rowTotal + ' ngàn</li>';
+                        total += -rowTotal;
+                    }              
+
+                    $('#detailContent').append(detailHtml);
+                    return total;
                 }
                 /******** END Total Functions ******/
             </script>

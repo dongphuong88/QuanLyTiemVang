@@ -1,3 +1,8 @@
+//Testing functions
+function t(text){
+    alert(text);
+}
+
 // auto select has to be done when page ready
 $(function () {
 $('input').on("focus", function() {
