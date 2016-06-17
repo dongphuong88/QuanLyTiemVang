@@ -26,10 +26,10 @@ function showAccordions(id) {
     }
 }
 
-// Change Goldweight to text (input : ly)
-function readGoldWeight( weightLy) {
+// Change Goldweight to text (input : phan)
+function readGoldWeight( weightPhan) {
     var text = "";
-    var currWeight = weightLy;
+    var currWeight = weightPhan * 10;
     var unit = currWeight % 10; // ly
     if( unit > 0)
         text = unit + " ly" + text;
