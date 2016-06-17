@@ -21,7 +21,7 @@
         <table class="w3-table w3-bordered w3-striped w3-card-4">
             <thead>
                 <tr class="w3-red">
-                    <th scope="col"></th>
+                    <th scope="col"><a href="./connect/GiaVangAccess.jsp" onclick="localStorage.setItem('giaVangPrevPageLink', './MuaBanTraoDoiAccess.jsp');"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></th>
                     <th scope="col" style="text-align:right;" id="name9999">999.9</th>
                     <th scope="col" style="text-align:right;" id="nameNuTrang24K">Nữ Trang 24K</th>
                     <th scope="col" style="text-align:right;" id="name680">680</th>
@@ -153,19 +153,17 @@
                 <h3 style="margin-bottom:0px">Chi Tiết</h3></header>
         </div>
         <div class="w3-container">
-          <ul class="w3-ul w3-border" id="detailContent" >test
+          <ul class="w3-ul w3-border" id="detailContent" >
             </ul>
         </div>
         <!-- END Detail -->
     </div>
             <script>
                 /******** Mapping Data **********/
-                /*
                 $('#sell9999').html(localStorage.getItem("sell9999"));
                 $('#buy9999').html(localStorage.getItem("buy9999"));
                 $('#sellNuTrang24K').html(localStorage.getItem("sellNuTrang24K"));
                 $('#buyNuTrang24K').html(localStorage.getItem("buyNuTrang24K"));
-                */
                 $('#sell680').html(localStorage.getItem("sell680"));
                 $('#buy680').html(localStorage.getItem("buy680"));
                 $('#sell625').html(localStorage.getItem("sell625"));
@@ -181,6 +179,7 @@
                 /******** Action button functions ******/
                 // Button Actions
                 function clickBuy() {
+                	clearBuy();
                     $('.hideActionButton').hide();
                     $('.showBuy').show();
                     $('#head').html('<button class="w3-btn w3-yellow w3-xlarge w3-round-large w3-padding-large" onclick="clickBack()">Quay Lại</button> Mua');
@@ -188,6 +187,7 @@
                 }
 
                 function clickSell() {
+                	clearSell();
                     $('.hideActionButton').hide();
                     $('.showSell').show();
                     $('#head').html('<button class="w3-btn w3-yellow w3-xlarge w3-round-large w3-padding-large" onclick="clickBack()">Quay Lại</button> Bán');
@@ -195,6 +195,8 @@
                 }
 
                 function clickTrade() {
+                	clearBuyTrade();
+                	clearSellTrade();
                     $('.hideActionButton').hide();
                     $('.showTrade').show();
                     $('#head').html('<button class="w3-btn w3-yellow w3-xlarge w3-round-large w3-padding-large" onclick="clickBack()">Quay Lại</button> Đổi');
@@ -340,6 +342,11 @@
                 function clearBuyTrade() {
                     $('#buyTradeRow .extraBuyTradeRow').remove();
                     $('#buyTradeRow input').val(0);
+                }
+             // Clear SellTrade Form
+                function clearSellTrade() {
+                    $('#sellTradeRow .extraSellTradeRow').remove();
+                    $('#sellTradeRow input').val(0);
                 }
                 // Cal Trade
                 function calTrade() {

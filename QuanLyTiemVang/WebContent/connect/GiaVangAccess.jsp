@@ -6,9 +6,25 @@
 
 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 	Connection con = DriverManager.getConnection(connectionString);
-
+%>
+<html>
+<head>
+<%
 	// Page processing
 	if (request.getParameter("update") != null) {
+		if( request.getParameter("update").equals("false")) {
+			%>
+			<script>
+			if (typeof(Storage) !== "undefined") {
+				window.location = localStorage.getItem('giaVangPrevPageLink');
+			}else {
+				alert("Sorry, your browser does not support Web Storage...");
+				window.location = "../index.jsp";
+			}
+			</script>
+			<%
+		}
+		else {
 		PreparedStatement stmt = con
 				.prepareStatement("UPDATE LOAIVANGS SET GiaMua=?, GiaBan=? WHERE LoaiVang=?");
 		int buyPrice, sellPrice;
@@ -40,11 +56,18 @@
 		buyPrice = Integer.parseInt(request.getParameter("buy560"));
 		stmt.setInt(1, buyPrice);stmt.setInt(2, sellPrice);stmt.setString(3, "560");
 		stmt.executeUpdate();
-		
-		if( request.getParameter("prevPage") != null) 
-			response.sendRedirect(request.getParameter("prevPage"));
-		else
-			response.sendRedirect("../index.jsp");
+
+			%>
+			<script>
+			if (typeof(Storage) !== "undefined") {
+				window.location = localStorage.getItem('giaVangPrevPageLink');
+			}else {
+				alert("Sorry, your browser does not support Web Storage...");
+				window.location = "../index.jsp";
+			}
+			</script>
+<%
+		}	
 	}// End UpdatePage
 	else {
 		// Mapping data
@@ -58,8 +81,6 @@
 			goldPriceTable.put(rs.getString("LoaiVang"), price);
 		}
 %>
-<html>
-<head>
 	<script>
 		if (typeof(Storage) !== "undefined") {
 			localStorage.setItem("buy9999", <%= goldPriceTable.get("9999").get("GiaMua") %>);
@@ -76,7 +97,7 @@
 			localStorage.setItem("sell600", <%= goldPriceTable.get("600").get("GiaBan") %>);
 			localStorage.setItem("buy560", <%= goldPriceTable.get("560").get("GiaMua") %>);
 			localStorage.setItem("sell560", <%= goldPriceTable.get("560").get("GiaBan") %>);
-			
+
 			window.location = "../GiaVang.html";
 		}else {
 			alert("Sorry, your browser does not support Web Storage...");

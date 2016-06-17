@@ -31,12 +31,13 @@
 				</p>
 			</div>
 			<div class="w3-container w3-center">
-				<input hidden name="update" value="true"> <a
+				<input hidden name="update" value="true">
+				<input hidden name="prevPage" value="true"> <a
 					class="w3-btn w3-blue" onclick="updatePrice()">Tính Theo Giá
 					999.9</a>
 				<button class="w3-btn w3-green" type="submit" style="width: 33%">Lưu
 					và Thoát</button>
-				<a class="w3-btn w3-red">Không Lưu và Thoát</a>
+				<button class="w3-btn w3-red" type="submit" onclick="$('input[name*=\'update\']').val(false);">Không Lưu và Thoát</button>
 			</div>
 			<div class="w3-half w3-container">
 				<p>
